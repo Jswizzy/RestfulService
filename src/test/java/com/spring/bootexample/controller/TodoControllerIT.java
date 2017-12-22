@@ -1,4 +1,4 @@
-package com.spring.bootexaintegrationler;
+package com.spring.bootexample.controller;
 
 import com.spring.bootexample.BootExampleApplication;
 import com.spring.bootexample.model.Todo;
