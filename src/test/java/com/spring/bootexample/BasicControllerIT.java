@@ -40,6 +40,14 @@ public class BasicControllerIT {
                 containsString("Hello World"));
     }
 
+    @Test
+    public void welcomeWithParameter() throws Exception {
+        ResponseEntity<String> response =
+                template.getForEntity(
+                        createURL("/welcome-with-parameter/name/Buddy"), String.class);
+        assertThat(response.getBody(), containsString("Hello World, Buddy"));
+    }
+
     private String createURL(String uri) {
         return LOCAL_HOST + port + uri;
     }

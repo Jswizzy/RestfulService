@@ -42,4 +42,14 @@ public class BasicControllerTest {
                 .andExpect(content().string(
                         containsString("Hello World")));
     }
+
+    @Test
+    public void welcomeWithParameter() throws Exception {
+        mvc.perform(
+                get("/welcome-with-parameter/name/Buddy")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(
+                        content().string(containsString("Hello World, Buddy")));
+    }
 }
