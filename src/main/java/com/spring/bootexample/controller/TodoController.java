@@ -1,11 +1,12 @@
 package com.spring.bootexample.controller;
 
+import com.spring.bootexample.common.ExceptionResponse;
 import com.spring.bootexample.common.TodoNotFoundException;
 import com.spring.bootexample.model.Todo;
 import com.spring.bootexample.service.TodoService;
-import com.sun.xml.internal.bind.v2.TODO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -23,6 +25,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class TodoController {
     @Autowired
     private TodoService todoService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @ApiOperation(
             value = "Retrieve all todos for a user by passing in his name",
@@ -64,5 +69,13 @@ public class TodoController {
     @GetMapping(path = "/users/dummy-service")
     public Todo errorService() {
         throw new RuntimeException("Some Exception Occurred");
+    }
+
+
+    @GetMapping("/welcome-internationalized")
+    public String msg(@RequestHeader(value = "Accept-Language",
+            required = false) Locale locale) {
+        return messageSource.getMessage("welcome.message", null,
+                locale);
     }
 }
