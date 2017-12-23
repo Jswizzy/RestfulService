@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(TodoController.class)
+@WebMvcTest(value = TodoController.class, secure = false)
 public class TodoControllerTest {
 
     private static final int CREATED_TODO_ID = 5;
@@ -94,6 +94,25 @@ public class TodoControllerTest {
                 .andExpect(
                         header().string("location", containsString("/users/Jack/todos/"
                                 + CREATED_TODO_ID)));
+    }
+
+    @Test
+    public void createTodo_withValidationError() throws Exception {
+        Todo mockTodo = new Todo(CREATED_TODO_ID, "Jack",
+                "Learn Spring MVC", new Date(), false);
+
+        String todo = "{\"user\":\"Jack\",\"desc\":\"Learn\",\"done\":false}";
+
+        when( service.addTodo(
+                anyString(), anyString(), isNull(), anyBoolean()))
+                .thenReturn(mockTodo);
+
+        MvcResult result = mvc.perform(
+                post("/users/Jack/todos")
+                        .content(todo)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        status().is4xxClientError()).andReturn();
     }
 
 }

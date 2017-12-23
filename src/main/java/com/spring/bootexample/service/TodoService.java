@@ -34,6 +34,7 @@ public class TodoService {
 
     public Todo retrieveTodo(int id) {
         return todos.stream()
+                .filter(todo -> todo.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
