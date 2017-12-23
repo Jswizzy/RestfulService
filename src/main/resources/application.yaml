@@ -1,0 +1,13 @@
+spring:
+   profiles:
+      active: prod
+oauth2:
+   client:
+      clientId: clientId
+      clientSecret: clientSecret
+      authorized-grant-types: authorization_code,refresh_token,password
+      scope: openid
+application:
+   enableSwitchForService1: true
+   service1Url: http://abc-dev.service.com/somethingelse
+   service1Timeout: 250

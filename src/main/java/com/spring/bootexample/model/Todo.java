@@ -11,7 +11,7 @@ public class Todo {
     @NotNull
     private String user;
 
-    @Size(min = 9, message = "Enter atleast 10 Characters.")
+    @Size(min = 9, message = "Enter atleast 10 characters")
     private String desc;
 
     private Date targetDate;
